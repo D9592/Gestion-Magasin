@@ -1,0 +1,12 @@
+CREATE INDEX IF NOT EXISTS IX_JournalAudit_ActionDate ON JournalAudit(Action, DateHeureUtc);
+CREATE INDEX IF NOT EXISTS IX_JournalAudit_Entity ON JournalAudit(Entite, EntiteId, DateHeureUtc);
+CREATE TRIGGER IF NOT EXISTS TR_JournalAudit_ImmutableUpdate
+BEFORE UPDATE ON JournalAudit
+BEGIN
+  SELECT RAISE(ABORT,'JOURNAL_AUDIT_IMMUABLE');
+END;
+CREATE TRIGGER IF NOT EXISTS TR_JournalAudit_ImmutableDelete
+BEFORE DELETE ON JournalAudit
+BEGIN
+  SELECT RAISE(ABORT,'JOURNAL_AUDIT_IMMUABLE');
+END;
